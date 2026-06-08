@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio | Psicología Clínica</title>
+    
+    <!-- Fuentes: Poppins para títulos (moderna), Nunito para textos (cálida y legible) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Iconos de Phosphor Icons (diseño suave y moderno) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* ==========================================================================
+           VARIABLES DE COLOR Y DISEÑO
+           ========================================================================== */
+        :root {
+            /* Paleta de colores solicitada */
+            --lavanda: #B8A8D6;
+            --coral: #FF8F7A;
+            --fucsia-suave: #FFABC7;
+            --celeste: #AEE1F9;
+            --amarillo-calido: #FFDF85;
+            --verde-menta: #B5EAD7;
+            --blanco: #FFFFFF;
+            
+            /* Colores de texto y fondos secundarios */
+            --texto-principal: #2D3436;
+            --texto-secundario: #636E72;
+            --fondo-claro: #FAFAFD;
+            
+            /* Degradados y Sombras */
+            --gradiente-principal: linear-gradient(135deg, var(--coral) 0%, var(--fucsia-suave) 100%);
+            --gradiente-secundario: linear-gradient(135deg, var(--celeste) 0%, var(--lavanda) 100%);
+            --sombra-suave: 0 20px 40px rgba(0, 0, 0, 0.06);
+            --sombra-hover: 0 25px 50px rgba(255, 143, 122, 0.15);
+            
+            /* Efecto Vidrio (Glassmorphism) */
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.6);
+            --glass-blur: blur(12px);
+
+            /* Tipografía */
+            --font-titulos: 'Poppins', sans-serif;
+            --font-textos: 'Nunito', sans-serif;
+        }
+
+        /* ==========================================================================
+           RESETEO Y ESTILOS GLOBALES
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-textos);
+            color: var(--texto-principal);
+            background-color: var(--fondo-claro);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        h1, h2, h3, h4, .btn {
+            font-family: var(--font-titulos);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        section {
+            padding: 100px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ==========================================================================
+           FONDOS ANIMADOS (Blobs y Burbujas)
+           ========================================================================== */
+        .bg-shapes {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: float 20s infinite alternate ease-in-out;
+        }
+
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--celeste); animation-delay: 0s; }
+        .blob-2 { bottom: -20%; right: -10%; width: 60vw; height: 60vw; background: var(--fucsia-suave); animation-delay: -5s; }
+        .blob-3 { top: 40%; left: 60%; width: 40vw; height: 40vw; background: var(--amarillo-calido); animation-delay: -10s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            50% { transform: translate(5%, 10%) scale(1.1) rotate(10deg); }
+            100% { transform: translate(-5%, -5%) scale(0.9) rotate(-10deg); }
+        }
+
+        /* ==========================================================================
+           NAVEGACIÓN
+           ========================================================================== */
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1000px;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: var(--glass-border);
+            border-radius: 50px;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--coral);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--texto-secundario);
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--coral);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--coral);
+        }
+
+        /* ==========================================================================
+           BOTONES
+           ========================================================================== */
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--gradiente-principal);
+            color: var(--blanco);
+            box-shadow: 0 10px 20px rgba(255, 143, 122, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 25px rgba(255, 143, 122, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--blanco);
+            color: var(--lavanda);
+            border: 2px solid var(--lavanda);
+        }
+
+        .btn-secondary:hover {
+            background: var(--lavanda);
+            color: var(--blanco);
+            transform: translateY(-5px);
+        }
+
+        /* ==========================================================================
+           HERO SECTION
+           ========================================================================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 100px; /* Offset para el nav */
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: var(--gradiente-principal);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            /* Fallback */
+            color: var(--coral); 
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--texto-secundario);
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* Contenedor del Video / Imagen flotante */
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-card {
+            width: 100%;
+            max-width: 450px;
+            aspect-ratio: 4/5;
+            background: var(--blanco);
+            border-radius: 40px;
+            padding: 15px;
+            box-shadow: var(--sombra-suave);
+            position: relative;
+            transform: rotate(2deg);
+            transition: transform 0.5s ease;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        .video-card:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            border-radius: 30px;
+            background-color: var(--lavanda);
+            background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* EDITAR AQUÍ: Para usar un video real, descomenta esto en el HTML y ajusta CSS */
+        .video-placeholder video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 30px;
+        }
+
+        .play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            color: var(--coral);
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(255, 255, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+
+        .floating-badge {
+            position: absolute;
+            bottom: -20px;
+            left: -30px;
+            background: var(--blanco);
+            padding: 15px 25px;
+            border-radius: 30px;
+            box-shadow: var(--sombra-suave);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 600;
+            color: var(--texto-principal);
+            animation: float-badge 4s infinite ease-in-out alternate;
+        }
+
+        .floating-badge i {
+            font-size: 1.8rem;
+            color: var(--amarillo-calido);
+        }
+
+        @keyframes float-badge {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-15px); }
+        }
+
+        /* ==========================================================================
+           TÍTULOS DE SECCIÓN
+           ========================================================================== */
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--texto-principal);
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: var(--texto-secundario);
+            font-size: 1.1rem;
+        }
+
+        .title-accent {
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--gradiente-principal);
+            border-radius: 2px;
+            margin: 15px auto 0;
+        }
+
+        /* ==========================================================================
+           SECCIÓN: SOBRE MÍ
+           ========================================================================== */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text {
+            background: var(--glass-bg);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: var(--sombra-suave);
+            border: var(--glass-border);
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            color: var(--lavanda);
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .about-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .fact-card {
+            background: var(--blanco);
+            padding: 20px 25px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: var(--sombra-suave);
+            transition: transform 0.3s;
+        }
+
+        .fact-card:hover {
+            transform: translateX(10px);
+        }
+
+        .fact-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+        }
+
+        .bg-coral-light { background: #ffe6e2; color: var(--coral); }
+        .bg-menta-light { background: #eafff5; color: var(--verde-menta); }
+        .bg-lavanda-light { background: #f0ebf8; color: var(--lavanda); }
+        .bg-amarillo-light { background: #fff8e1; color: #f39c12; }
+
+        /* ==========================================================================
+           SECCIÓN: INTERESES (Tarjetas Coloridas)
+           ========================================================================== */
+        .interests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .interest-card {
+            background: var(--glass-bg);
+            border: var(--glass-border);
+            padding: 30px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: var(--sombra-suave);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        /* Forma orgánica en el fondo de la tarjeta */
+        .interest-card::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: var(--verde-menta);
+            border-radius: 50%;
+            opacity: 0.2;
+            z-index: -1;
+            transition: all 0.5s ease;
+        }
+
+        .interest-card:nth-child(even)::before {
+            background: var(--fucsia-suave);
+            left: -50px;
+            right: auto;
+        }
+
+        .interest-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--sombra-hover);
+            border-color: var(--blanco);
+        }
+
+        .interest-card:hover::before {
+            transform: scale(1.5);
+            opacity: 0.4;
+        }
+
+        .interest-card i {
+            font-size: 3rem;
+            color: var(--coral);
+            margin-bottom: 20px;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .interest-card:hover i {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .interest-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        /* ==========================================================================
+           SECCIÓN: HABILIDADES (Barras y Burbujas)
+           ========================================================================== */
+        .skills-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .skill-group h3 {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--texto-principal);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Barras animadas */
+        .skill-bar-wrapper {
+            margin-bottom: 25px;
+        }
+
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--texto-secundario);
+        }
+
+        .skill-bar {
+            width: 100%;
+            height: 12px;
+            background: rgba(0,0,0,0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            border-radius: 10px;
+            background: var(--gradiente-secundario);
+            width: 0; /* Inicia en 0 para animar con JS */
+            transition: width 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        /* Burbujas dinámicas para habilidades blandas */
+        .soft-skills-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            align-content: flex-start;
+            height: 100%;
+            padding: 20px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 30px;
+            border: var(--glass-border);
+        }
+
+        .soft-skill-tag {
+            padding: 12px 25px;
+            background: var(--blanco);
+            border-radius: 50px;
+            font-weight: 600;
+            color: var(--lavanda);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: default;
+        }
+
+        .soft-skill-tag:hover {
+            background: var(--lavanda);
+            color: var(--blanco);
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(184, 168, 214, 0.3);
+        }
+
+        /* ==========================================================================
+           SECCIÓN: SERVICIOS (Con aviso ético)
+           ========================================================================== */
+        .ethical-notice {
+            background: rgba(255, 223, 133, 0.3);
+            border-left: 5px solid var(--amarillo-calido);
+            padding: 20px 30px;
+            border-radius: 0 15px 15px 0;
+            margin-bottom: 50px;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            color: #856404;
+        }
+
+        .ethical-notice i {
+            font-size: 1.5rem;
+            margin-top: 3px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--blanco);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: var(--sombra-suave);
+            border-top: 5px solid var(--celeste);
+            transition: transform 0.3s;
+        }
+
+        .service-card:nth-child(2n) { border-top-color: var(--fucsia-suave); }
+        .service-card:nth-child(3n) { border-top-color: var(--verde-menta); }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .service-card h4 {
+            font-size: 1.3rem;
+            margin: 15px 0;
+            color: var(--texto-principal);
+        }
+
+        /* ==========================================================================
+           SECCIÓN: ENFOQUE CLÍNICO (Diseño cálido especial)
+           ========================================================================== */
+        .approach-section {
+            background: linear-gradient(135deg, rgba(255,143,122,0.05) 0%, rgba(184,168,214,0.1) 100%);
+            border-radius: 50px;
+            margin: 0 20px;
+            padding: 80px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .approach-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .quote-box {
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--coral);
+            margin: 40px 0;
+            font-family: var(--font-titulos);
+            font-weight: 600;
+        }
+
+        .quote-box::before, .quote-box::after {
+            content: '"';
+            font-size: 3rem;
+            color: var(--fucsia-suave);
+            opacity: 0.5;
+            vertical-align: bottom;
+        }
+
+        .pillars-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .pillar-item {
+            background: var(--blanco);
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            font-weight: 600;
+            color: var(--texto-secundario);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .pillar-item i {
+            color: var(--verde-menta);
+            font-size: 1.2rem;
+        }
+
+        /* ==========================================================================
+           SECCIÓN: EXPERIENCIA Y PROYECTOS
+           ========================================================================== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: var(--blanco);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--sombra-suave);
+            position: relative;
+            border-left: 4px solid var(--lavanda);
+        }
+
+        .project-date {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--lavanda);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .project-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .project-tag {
+            display: inline-block;
+            padding: 5px 15px;
+            background: var(--fondo-claro);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--texto-secundario);
+            margin-top: 15px;
+        }
+
+        /* ==========================================================================
+           SECCIÓN: CONTACTO
+           ========================================================================== */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            background: var(--blanco);
+            padding: 50px;
+            border-radius: 40px;
+            box-shadow: var(--sombra-suave);
+        }
+
+        .social-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 25px;
+            background: var(--fondo-claro);
+            border-radius: 20px;
+            font-weight: 600;
+            color: var(--texto-principal);
+            transition: all 0.3s ease;
+        }
+
+        .social-btn i {
+            font-size: 1.5rem;
+        }
+
+        .social-btn.whatsapp:hover { background: #E8F5E9; color: #2E7D32; transform: translateX(10px); }
+        .social-btn.email:hover { background: #FFF3E0; color: #EF6C00; transform: translateX(10px); }
+        .social-btn.linkedin:hover { background: #E3F2FD; color: #1565C0; transform: translateX(10px); }
+        .social-btn.instagram:hover { background: #FCE4EC; color: #C2185B; transform: translateX(10px); }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 18px 20px;
+            border-radius: 15px;
+            border: 2px solid #eee;
+            background: var(--fondo-claro);
+            font-family: var(--font-textos);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--celeste);
+            background: var(--blanco);
+            box-shadow: 0 5px 15px rgba(174, 225, 249, 0.3);
+        }
+
+        /* ==========================================================================
+           FOOTER
+           ========================================================================== */
+        footer {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: var(--texto-principal);
+            color: var(--blanco);
+            border-radius: 50px 50px 0 0;
+            margin-top: 50px;
+        }
+
+        .footer-quote {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--amarillo-calido);
+            margin-bottom: 20px;
+        }
+
+        .footer-info {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* ==========================================================================
+           ANIMACIONES AL SCROLL (Intersection Observer Clases)
+           ========================================================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+
+        /* ==========================================================================
+           MEDIA QUERIES (Responsividad)
+           ========================================================================== */
+        @media (max-width: 992px) {
+            .hero-grid, .about-grid, .contact-grid, .skills-container {
+                grid-template-columns: 1fr;
+            }
+            .hero-text h1 { font-size: 2.8rem; }
+            .hero-visual { margin-top: 40px; }
+            .video-card { max-width: 400px; }
+            section { padding: 80px 0; }
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 10px 20px; }
+            .nav-links {
+                display: none; /* Menú hamburguesa simple para móvil */
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--blanco);
+                padding: 20px;
+                border-radius: 20px;
+                box-shadow: var(--sombra-suave);
+                text-align: center;
+            }
+            .nav-links.show { display: flex; }
+            .menu-toggle { display: block; }
+            .hero-text h1 { font-size: 2.3rem; }
+            .section-title h2 { font-size: 2rem; }
+            .approach-section { padding: 50px 20px; margin: 0 10px; }
+            .contact-grid { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fondos animados globales -->
+    <div class="bg-shapes">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Navegación -->
+    <nav>
+        <div class="logo">
+            <i class="ph-fill ph-plant"></i> 
+            <!-- EDITAR AQUÍ: Tu nombre corto o iniciales -->
+            Nombre.
+        </div>
+        <div class="menu-toggle" id="mobile-menu">
+            <i class="ph ph-list"></i>
+        </div>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#sobre-mi">Conóceme</a></li>
+            <li><a href="#habilidades">Habilidades</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#experiencia">Experiencia</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <!-- Sección Inicio (Hero) -->
+    <section id="inicio" class="hero container">
+        <div class="hero-grid">
+            <div class="hero-text reveal">
+                <!-- EDITAR AQUÍ: Título principal -->
+                <h1>Psicología con empatía, ciencia y corazón</h1>
+                <p>Portafolio profesional de una estudiante de Psicología de últimos ciclos, orientada al área clínica. Acompañando el bienestar emocional desde Lima, Perú.</p>
+                <div class="hero-buttons">
+                    <a href="#sobre-mi" class="btn btn-primary">Conóceme</a>
+                    <a href="#contacto" class="btn btn-secondary">Contactar</a>
+                    <a href="#servicios" class="btn btn-secondary" style="border:none; text-decoration: underline;">Ver servicios</a>
+                </div>
+            </div>
+            
+            <div class="hero-visual reveal delay-2">
+                <div class="video-card">
+                    <!-- EDITAR AQUÍ: Reemplazar el div 'video-placeholder' por un iframe de YouTube o etiqueta <video> real -->
+                    <!-- Ejemplo: <video controls poster="poster.jpg" src="tu-video.mp4" style="width:100%; border-radius:30px;"></video> -->
+                    <div class="video-placeholder">
+                        <div class="play-btn"><i class="ph-fill ph-play"></i></div>
+                    </div>
+                </div>
+                <div class="floating-badge">
+                    <i class="ph-fill ph-brain"></i>
+                    <span>Salud Mental<br>Integral</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Sobre Mí -->
+    <section id="sobre-mi" class="container">
+        <div class="section-title reveal">
+            <h2>¿Quién soy?</h2>
+            <p>Un poco sobre mi historia y motivación</p>
+            <span class="title-accent"></span>
+        </div>
+
+        <div class="about-grid">
+            <div class="about-visual reveal">
+                <div class="fact-card bg-lavanda-light">
+                    <div class="fact-icon"><i class="ph-bold ph-student"></i></div>
+                    <div>
+                        <strong>Formación</strong>
+                        <p>Estudiante de últimos ciclos</p>
+                    </div>
+                </div>
+                <div class="fact-card bg-coral-light delay-1">
+                    <div class="fact-icon"><i class="ph-bold ph-map-pin"></i></div>
+                    <div>
+                        <strong>Ubicación</strong>
+                        <p>Lima, Perú</p>
+                    </div>
+                </div>
+                <div class="fact-card bg-menta-light delay-2">
+                    <div class="fact-icon"><i class="ph-bold ph-heartbeat"></i></div>
+                    <div>
+                        <strong>Área de interés</strong>
+                        <p>Psicología Clínica</p>
+                    </div>
+                </div>
+                <div class="fact-card bg-amarillo-light delay-3">
+                    <div class="fact-icon"><i class="ph-bold ph-handshake"></i></div>
+                    <div>
+                        <strong>Enfoque</strong>
+                        <p>Empático, humano y ético</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-text reveal delay-2">
+                <!-- EDITAR AQUÍ: Tu nombre -->
+                <h3>Hola, soy [Tu Nombre]</h3>
+                <!-- EDITAR AQUÍ: Tu descripción -->
+                <p>Soy una estudiante de Psicología de últimos ciclos en Lima, Perú, con especial interés en la Psicología Clínica, la salud mental, la escucha empática y el acompañamiento emocional.</p>
+                <p>Me motiva comprender la experiencia humana desde una mirada ética, científica y sensible. Creo firmemente que cada persona tiene los recursos internos para sanar y crecer cuando se le brinda un espacio seguro y libre de juicios.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Intereses -->
+    <section id="pasiones" class="container">
+        <div class="section-title reveal">
+            <h2>Lo que me apasiona</h2>
+            <p>Áreas en las que profundizo mi aprendizaje diario</p>
+            <span class="title-accent"></span>
+        </div>
+
+        <div class="interests-grid">
+            <div class="interest-card reveal">
+                <i class="ph-light ph-user-focus"></i>
+                <h4>Psicología Clínica</h4>
+                <p>Estudio de los trastornos mentales y el malestar psicológico para promover el alivio.</p>
+            </div>
+            <div class="interest-card reveal delay-1">
+                <i class="ph-light ph-heart"></i>
+                <h4>Salud Mental</h4>
+                <p>Promoción del bienestar emocional, psicológico y social en todas las etapas.</p>
+            </div>
+            <div class="interest-card reveal delay-2">
+                <i class="ph-light ph-clipboard-text"></i>
+                <h4>Evaluación Psicológica</h4>
+                <p>Aplicación de herramientas clínicas para comprender la estructura de la personalidad.</p>
+            </div>
+            <div class="interest-card reveal">
+                <i class="ph-light ph-users-three"></i>
+                <h4>Intervención y Apoyo</h4>
+                <p>Acompañamiento emocional en crisis y procesos de desarrollo personal.</p>
+            </div>
+            <div class="interest-card reveal delay-1">
+                <i class="ph-light ph-books"></i>
+                <h4>Psicoeducación</h4>
+                <p>Brindar información científica y accesible para empoderar a pacientes y familiares.</p>
+            </div>
+            <div class="interest-card reveal delay-2">
+                <i class="ph-light ph-sun"></i>
+                <h4>Bienestar Integral</h4>
+                <p>Mirada holística que integra mente, cuerpo y entorno social.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Habilidades -->
+    <section id="habilidades" class="container">
+        <div class="section-title reveal">
+            <h2>Habilidades y Competencias</h2>
+            <p>Herramientas técnicas y humanas en desarrollo constante</p>
+            <span class="title-accent"></span>
+        </div>
+
+        <div class="skills-container">
+            <!-- Habilidades Técnicas (Barras) -->
+            <div class="skill-group reveal">
+                <h3><i class="ph-fill ph-notebook"></i> Competencias Técnicas</h3>
+                
+                <div class="skill-bar-wrapper">
+                    <div class="skill-info"><span>Observación y entrevista clínica</span></div>
+                    <div class="skill-bar"><div class="skill-progress" data-width="85%"></div></div>
+                </div>
+                <div class="skill-bar-wrapper">
+                    <div class="skill-info"><span>Aplicación de pruebas (bajo supervisión)</span></div>
+                    <div class="skill-bar"><div class="skill-progress" data-width="75%"></div></div>
+                </div>
+                <div class="skill-bar-wrapper">
+                    <div class="skill-info"><span>Elaboración de informes psicológicos</span></div>
+                    <div class="skill-bar"><div class="skill-progress" data-width="80%"></div></div>
+                </div>
+                <div class="skill-bar-wrapper">
+                    <div class="skill-info"><span>Diseño de talleres y Psicoeducación</span></div>
+                    <div class="skill-bar"><div class="skill-progress" data-width="90%"></div></div>
+                </div>
+            </div>
+
+            <!-- Habilidades Blandas (Burbujas) -->
+            <div class="skill-group reveal delay-2">
+                <h3><i class="ph-fill ph-users"></i> Competencias Humanas</h3>
+                <div class="soft-skills-cloud">
+                    <span class="soft-skill-tag">Escucha activa</span>
+                    <span class="soft-skill-tag">Empatía profunda</span>
+                    <span class="soft-skill-tag">Comunicación asertiva</span>
+                    <span class="soft-skill-tag">Ética profesional</span>
+                    <span class="soft-skill-tag">Resolución de conflictos</span>
+                    <span class="soft-skill-tag">Trabajo en equipo</span>
+                    <span class="soft-skill-tag">Sensibilidad cultural</span>
+                    <span class="soft-skill-tag">Pensamiento crítico</span>
+                    <span class="soft-skill-tag">Confidencialidad</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Servicios como Estudiante -->
+    <section id="servicios" class="container">
+        <div class="section-title reveal">
+            <h2>Servicios de Apoyo</h2>
+            <p>Acompañamiento desde mi formación académica</p>
+            <span class="title-accent"></span>
+        </div>
+
+        <div class="ethical-notice reveal">
+            <i class="ph-fill ph-warning-circle"></i>
+            <div>
+                <strong>Nota ética importante:</strong>
+                <p>Los servicios aquí descritos son de carácter preventivo, orientativo y de apoyo psicoeducativo, brindados en mi calidad de estudiante de últimos ciclos. <b>No reemplazan el diagnóstico ni el tratamiento psicoterapéutico</b> brindado por un profesional titulado y colegiado.</p>
+            </div>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card reveal">
+                <i class="ph-fill ph-chats" style="font-size:2.5rem; color:var(--celeste);"></i>
+                <h4>Orientación Psicológica Básica</h4>
+                <p>Espacio de escucha activa y contención emocional inicial bajo supervisión académica para adolescentes y jóvenes.</p>
+            </div>
+            <div class="service-card reveal delay-1">
+                <i class="ph-fill ph-presentation-chart" style="font-size:2.5rem; color:var(--fucsia-suave);"></i>
+                <h4>Talleres de Bienestar Emocional</h4>
+                <p>Diseño y facilitación de dinámicas grupales sobre autoestima, manejo de estrés y habilidades sociales.</p>
+            </div>
+            <div class="service-card reveal delay-2">
+                <i class="ph-fill ph-book-open-text" style="font-size:2.5rem; color:var(--verde-menta);"></i>
+                <h4>Material Psicoeducativo</h4>
+                <p>Creación de contenido, infografías y charlas informativas para la prevención y promoción de la salud mental.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Enfoque Clínico -->
+    <section id="enfoque" class="container" style="padding-top: 50px;">
+        <div class="approach-section reveal">
+            <div class="approach-content">
+                <div class="section-title" style="margin-bottom: 30px;">
+                    <h2>Mi enfoque clínico</h2>
+                    <span class="title-accent"></span>
+                </div>
+                
+                <!-- EDITAR AQUÍ: Texto sobre tu enfoque -->
+                <p style="font-size: 1.15rem; color: #4a4a4a;">
+                    "Mi enfoque está orientado al área clínica desde una mirada humanista e integral, centrada en la persona, su historia, sus emociones y sus recursos personales. Me interesa comprender cada experiencia humana con respeto, empatía y sensibilidad, promoviendo espacios de escucha activa, confianza y acompañamiento emocional."
+                </p>
+
+                <div class="quote-box">
+                    Cada persona merece ser escuchada desde su historia, su contexto y su humanidad.
+                </div>
+
+                <div class="pillars-grid">
+                    <div class="pillar-item"><i class="ph-bold ph-flower-lotus"></i> Enfoque Humanista</div>
+                    <div class="pillar-item"><i class="ph-bold ph-ear"></i> Escucha Activa</div>
+                    <div class="pillar-item"><i class="ph-bold ph-shield-check"></i> Confidencialidad</div>
+                    <div class="pillar-item"><i class="ph-bold ph-arrows-out"></i> Mirada Integral</div>
+                    <div class="pillar-item"><i class="ph-bold ph-student"></i> Aprendizaje Constante</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Experiencias y Proyectos -->
+    <section id="experiencia" class="container">
+        <div class="section-title reveal">
+            <h2>Experiencias y Proyectos</h2>
+            <p>Mi recorrido práctico y académico</p>
+            <span class="title-accent"></span>
+        </div>
+
+        <div class="projects-grid">
+            <!-- EDITAR AQUÍ: Tus proyectos y experiencias reales -->
+            <div class="project-card reveal">
+                <span class="project-date">Ene 2024 - Presente</span>
+                <h4>Prácticas Preprofesionales Clínicas</h4>
+                <p>Acompañamiento psicológico primario, realización de triajes y apoyo en talleres grupales en el Centro Psicológico Universitario.</p>
+                <span class="project-tag">Práctica Clínica</span>
+            </div>
+
+            <div class="project-card reveal delay-1">
+                <span class="project-date">Ago 2023 - Dic 2023</span>
+                <h4>Voluntariado: "Escucha Línea de Vida"</h4>
+                <p>Atención telefónica de primeros auxilios psicológicos y contención emocional para jóvenes en crisis.</p>
+                <span class="project-tag">Voluntariado</span>
+            </div>
+
+            <div class="project-card reveal delay-2">
+                <span class="project-date">Oct 2023</span>
+                <h4>Taller: Gestión de la Ansiedad Universitaria</h4>
+                <p>Diseño y ejecución de taller psicoeducativo para estudiantes de primeros ciclos, brindando herramientas de afrontamiento.</p>
+                <span class="project-tag">Psicoeducación</span>
+            </div>
+            
+            <div class="project-card reveal">
+                <span class="project-date">Nov 2022</span>
+                <h4>Investigación: Impacto de las Redes Sociales</h4>
+                <p>Trabajo académico destacado sobre la correlación entre el uso de Instagram y la autopercepción en adolescentes limeños.</p>
+                <span class="project-tag">Investigación</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Contacto -->
+    <section id="contacto" class="container">
+        <div class="section-title reveal">
+            <h2>Conectemos</h2>
+            <p>Hablemos sobre salud mental, proyectos o consultas</p>
+            <span class="title-accent"></span>
+        </div>
+
+        <div class="contact-grid reveal">
+            <div>
+                <h3 style="font-size: 1.8rem; margin-bottom: 15px; color: var(--lavanda);">¿Trabajamos juntos?</h3>
+                <p>Si deseas conocer más sobre mi trabajo, colaborar en proyectos de salud mental, o solicitar apoyo psicoeducativo, no dudes en escribirme por cualquier medio.</p>
+                
+                <div class="social-buttons">
+                    <!-- EDITAR AQUÍ: Enlaces a tus redes -->
+                    <a href="#" class="social-btn whatsapp">
+                        <i class="ph-fill ph-whatsapp-logo"></i> Mensaje por WhatsApp
+                    </a>
+                    <a href="mailto:tu-correo@gmail.com" class="social-btn email">
+                        <i class="ph-fill ph-envelope-simple"></i> tu-correo@gmail.com
+                    </a>
+                    <a href="#" class="social-btn linkedin">
+                        <i class="ph-fill ph-linkedin-logo"></i> Perfil en LinkedIn
+                    </a>
+                    <a href="#" class="social-btn instagram">
+                        <i class="ph-fill ph-instagram-logo"></i> @tu.instagram.psi
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <form class="contact-form" onsubmit="event.preventDefault(); alert('¡Gracias! (Esto es un diseño de prueba, debes conectar el formulario a un servicio backend como Formspree para recibir correos reales)');">
+                    <div class="form-group">
+                        <input type="text" placeholder="Tu Nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Tu Correo Electrónico" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="¿En qué puedo ayudarte?" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Enviar Mensaje <i class="ph-bold ph-paper-plane-right" style="margin-left: 5px;"></i></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p class="footer-quote">"Acompañar, escuchar y comprender también es una forma de cuidar."</p>
+            <!-- EDITAR AQUÍ: Año y Nombre -->
+            <p class="footer-info">© 2024 [Tu Nombre]. Estudiante de Psicología.</p>
+            <p class="footer-info">Lima, Perú</p>
+        </div>
+    </footer>
+
+    <!-- ==========================================================================
+         JAVASCRIPT PARA ANIMACIONES E INTERACCIONES
+         ========================================================================== -->
+    <script>
+        // 1. Menú móvil (Hamburguesa)
+        const menuToggle = document.getElementById('mobile-menu');
+        const navLinks = document.getElementById('nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('show');
+        });
+
+        // Cerrar menú al hacer clic en un enlace (en móvil)
+        navLinks.addEventListener('click', (e) => {
+            if(e.target.tagName === 'A') {
+                navLinks.classList.remove('show');
+            }
+        });
+
+        // 2. Animaciones al hacer Scroll (Intersection Observer)
+        const revealElements = document.querySelectorAll('.reveal');
+        const progressBars = document.querySelectorAll('.skill-progress');
+
+        const revealOptions = {
+            threshold: 0.15, // El elemento aparece cuando el 15% es visible
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                
+                // Agregar clase activa
+                entry.target.classList.add('active');
+                
+                // Si es la sección de habilidades, animar barras de progreso
+                if(entry.target.classList.contains('skill-group')) {
+                    progressBars.forEach(bar => {
+                        const width = bar.getAttribute('data-width');
+                        bar.style.width = width;
+                    });
+                }
+                
+                // Dejar de observar una vez animado
+                observer.unobserve(entry.target);
+            });
+        }, revealOptions);
+
+        revealElements.forEach(el => {
+            revealOnScroll.observe(el);
+        });
+
+        // 3. Simulación de Play del Video (Interacción visual)
+        const playBtn = document.querySelector('.play-btn');
+        if(playBtn) {
+            playBtn.addEventListener('click', () => {
+                alert('Aquí se reproduciría tu video de presentación. \n(Puedes reemplazar el placeholder por la etiqueta <video> en el código HTML).');
+            });
+        }
+    </script>
+</body>
+</html>
